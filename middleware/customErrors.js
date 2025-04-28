@@ -24,8 +24,14 @@ export class ForbiddenError extends CustomError {
   }
 }
 
-export class InterError extends CustomError {
+export class InternalError extends CustomError {
   constructor(message = 'Internal Server Error') {
     super(message, 500)
+  }
+}
+
+export class ConflictError extends CustomError {
+  constructor(message = 'Already Exist before, try again') {
+    super(message, 409)
   }
 }
