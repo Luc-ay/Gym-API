@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 import asynchWrapper from '../middleware/asyncwrapper.js'
 import {
   ConflictError,
@@ -43,15 +44,29 @@ export const loginUsers = asynchWrapper(async (req, res) => {
   if (!email || !password) {
     throw new ValidationError('All field is required')
   }
-  const verify = await User.findOne(email)
-  if (!verify) {
+  const user = await User.findOne(email)
+  if (!user) {
     throw new NotFoundError('User does not exist.....Register')
   }
 
-  const checkPassword = await bcrypt.compare(password, verify.password)
-  if (!checkPassword) {
+  const isMatch = await bcrypt.compare(password, user.password)
+  if (!isMatch) {
     throw new ValidationError('Email or Password not Match')
   }
 
-  re
+  // Generate Token
+  const token = jwt.sign(
+    {
+      userId: user._id,
+      email: user.email,
+    },
+    process.env.JWT_SECRET,
+    { expiresIn: '12h' }
+  )
+  user.password = null
+
+  res.status(200).json({
+    token,
+    user,
+  })
 })

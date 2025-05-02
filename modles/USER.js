@@ -18,6 +18,11 @@ const userSchema = new mongoose.Schema(
       min: 6,
       max: 16,
     },
+    role: {
+      type: String,
+      enum: ['Customer', 'Admin'],
+      default: 'Customer',
+    },
     age: {
       type: Number,
       min: 18,
