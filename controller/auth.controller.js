@@ -9,7 +9,7 @@ import {
 import User from '../modles/USER.js'
 
 export const registerUsers = asynchWrapper(async (req, res) => {
-  const { name, email, password1, password2 } = req.body
+  const { name, email, password1, password2, role } = req.body
   if (!name || !email || !password1 || !password2) {
     throw new ValidationError('All fields are required')
   }
@@ -29,6 +29,7 @@ export const registerUsers = asynchWrapper(async (req, res) => {
     name,
     email,
     password: hashedPassword,
+    role,
   })
 
   newUser.password = null
