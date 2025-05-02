@@ -10,6 +10,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon npm server.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+hhttps://github.com/Luc-ay/Gym-API.git"
+  },
   "dependencies": {
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
